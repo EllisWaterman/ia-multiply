@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @State private var answer: String = ""
+    @State private var input: String = ""
     @State private var userInput: String = ""
     @State var currentQuestion = Question();
     @State var errorMessage = ""
@@ -11,19 +11,19 @@ struct ContentView: View {
         Text(errorMessage)
         TextField(
             "Enter Answer",
-            text: $answer
+            text: $input
         ).disableAutocorrection(true)
         .border(.secondary)
         .keyboardType(.numberPad)
         .padding()
         .frame(width: 200)
-        .onChange(of: answer) {
-            if (!answer.isEmpty){
-                if (Int(answer) == currentQuestion.factor0 * currentQuestion.factor1){
+        .onChange(of: input) {
+            if (!input.isEmpty ){
+                if (input == currentQuestion.answer){
                     currentQuestion = Question()
                     errorMessage = "Correct!\nTry this one:"
-                    answer = ""
-                } else {
+                    input = ""
+                } else if(input.count == currentQuestion.answer.count){
                     errorMessage = "Incorrect.\nTry again."
                 }
             }
@@ -31,3 +31,4 @@ struct ContentView: View {
         
     }
 }
+
