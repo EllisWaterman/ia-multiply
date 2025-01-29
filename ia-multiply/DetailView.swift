@@ -7,12 +7,12 @@
 import SwiftUI
 
 struct DetailView: View {
-    var body: some View {
         @State var input: String = ""
         @State var userInput: String = ""
         @State var currentQuestion = Question();
         @State var errorMessage = ""
         @State var numQuestions = Int()
+    var body: some View {
         Text(currentQuestion.equation)
         Text(errorMessage)
         TextField(
