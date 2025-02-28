@@ -6,7 +6,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init() {
-        container = NSPersistentContainer(name: "Students")
+        container = NSPersistentContainer(name: "Student")
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -37,12 +37,16 @@ struct PersistenceController {
     func fetchStudent() -> Student {
         let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
         fetchRequest.fetchLimit = 1
-
         do {
             let students = try viewContext.fetch(fetchRequest)
-            return students.first ?? createStudent()
+            if let student = students.first {
+                return student
+            } else {
+                return createStudent()
+            }
         } catch {
-            fatalError("Failed to fetch Student: \(error)")
+            print("Failed to fetch Student: \(error)")
+            return createStudent()
         }
     }
 
