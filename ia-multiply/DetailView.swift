@@ -9,19 +9,18 @@ struct DetailView: View {
     @FocusState private var isTextFieldFocused: Bool
     var delay: TimeInterval = 1.0
     @State var isActive = false
-
+    @Environment(\.managedObjectContext) private var viewContext
     var body: some View {
         NavigationStack {
             VStack {
                 Text(errorMessage)
                     .frame(maxWidth: .infinity)
                     .font(.system(size: 30))
-                Text(currentQuestion.equation)
-                
+                Text(currentQuestion.equation).font(.system(size: 48))
                 TextField(
-                    "Enter Answer",
+                    "Answer",
                     text: $input
-                )
+                ).font(.system(size: 48))
                 .disableAutocorrection(true)
                 .border(.secondary)
                 .keyboardType(.numberPad)
@@ -56,7 +55,8 @@ struct DetailView: View {
                 }
                 
                 .navigationDestination(isPresented: $isActive) {
-                    ContentView()
+                    let studentInstance = Student(context: viewContext)
+                    ContentView(student: studentInstance)
                         .navigationBarBackButtonHidden(true)
                 }
             }

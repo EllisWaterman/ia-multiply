@@ -7,9 +7,12 @@
 
 import SwiftUI
 import SwiftData
+import CoreData
+
 
 @main
 struct ia_multiplyApp: App {
+    let persistenceController = PersistenceController.shared
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -22,10 +25,13 @@ struct ia_multiplyApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    @Environment(\.managedObjectContext) private var viewContext
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let student = persistenceController.fetchStudent()
+            ContentView(student: student).environment(\.managedObjectContext, persistenceController.viewContext)
         }
         .modelContainer(sharedModelContainer)
     }
