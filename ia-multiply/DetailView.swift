@@ -56,7 +56,7 @@ struct DetailView: View {
                 
                 .navigationDestination(isPresented: $isActive) {
                     let studentInstance = Student(context: viewContext)
-                    ContentView(student: studentInstance)
+                    ResultView(student: studentInstance)
                         .navigationBarBackButtonHidden(true)
                 }
             }
