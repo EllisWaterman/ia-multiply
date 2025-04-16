@@ -7,8 +7,6 @@ class Question {
     var equation: String
     var answer: String
     init() {
-//        let time = UInt32(NSDate().timeIntervalSinceReferenceDate)
-//        srand(time)
 
         factor0 = Int.random(in: 1..<10)
         factor1 = Int.random(in: 1..<10)
